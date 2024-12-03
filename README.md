@@ -12,12 +12,12 @@ Este é um projeto desenvolvido em Python para consultar a cotação do dólar u
     ```shell script
     $> (venv) python -m pip install -r requirements.txt
     ```
-# API utilizada
+## API utilizada
  [`API's Banco Central`][api-olinda-bc]
 
 [api-olinda-bc]: https://dadosabertos.bcb.gov.br/dataset/expectativas-mercado/resource/d420a704-75a7-4f45-8f4b-0fca813c70f0
 
-# TODO:
+## TODO:
 
 - [ ] Modificar o código para incluir a cotação de venda da nova API.
 - [ ] Ajustar o gráfico para exibir a cotação de compra e venda em eixos Y separados.
