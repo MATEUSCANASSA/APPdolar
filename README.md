@@ -1,3 +1,13 @@
+# Python Version
+Projeto criado utilizando python 3.11.0
+
+# Dependências
+Pacotes e bibliotecas utlizadas em 'requirementes.txt'
+
+    ```shell script
+    $> (venv) python -m pip install -r requirements.txt
+    ```
+
 # Projeto de aplicativo de cotação de dolar escrito em pyhton consultando a API do banco central
 
 # Quando fiz esse projeto, a API do BC disponibilizava apenas uma cotação a de compra, porém, hoje existe uma API mais abrangente, que tras as cotações de compra e de venda.
