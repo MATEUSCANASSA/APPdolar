@@ -1,6 +1,6 @@
 # Projeto de Cotação de Dólar - API do Banco Central
 
-Este é um projeto desenvolvido em Python para consultar a cotação do dólar usando a API do Banco Central do Brasil. O projeto originalmente consultava apenas a cotação de compra, mas a nova versão da API permite consultar tanto a cotação de compra quanto a de venda. 
+Este é um projeto desenvolvido em Python para consultar a cotação do dólar usando a API do Banco Central do Brasil. Permite consultar tanto a cotação de compra quanto a de venda. 
 
 
 ## Requisitos
@@ -19,7 +19,7 @@ Este é um projeto desenvolvido em Python para consultar a cotação do dólar u
 
 ## TODO:
 
-- [ ] Modificar o código para incluir a cotação de venda da nova API.
-- [ ] Ajustar o gráfico para exibir a cotação de compra e venda em eixos Y separados.
-- [ ] Atualizar o código para gerar duas colunas no arquivo Excel: uma para a cotação de compra e outra para a cotação de venda.
-- [ ] Testar a nova implementação com diferentes períodos de consulta.
+- [x] Modificar o código para incluir a cotação de venda da nova API.
+- [x] Ajustar o gráfico para exibir a cotação de compra e venda em eixos Y separados.
+- [x] Atualizar o código para gerar duas colunas no arquivo Excel: uma para a cotação de compra e outra para a cotação de venda.
+- [x] Testar a nova implementação com diferentes períodos de consulta.
