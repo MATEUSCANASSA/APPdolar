@@ -19,7 +19,7 @@ Set-Location -Path $diretorio_build
 
 # Rodar o pyinstaller para gerar o .exe
 # Vamos incluir o 'dolar.jpg' como recurso com o parâmetro --add-data
-pyinstaller --onefile --add-data "dolar.jpg;." main.py
+pyinstaller --onefile --windowed --add-data "dolar.jpg;." main.py
 
 # Aguardar o processo finalizar
 Write-Host "Build concluído. O arquivo .exe foi gerado no diretório 'dist'."
