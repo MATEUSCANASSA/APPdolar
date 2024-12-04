@@ -106,7 +106,7 @@ class Application:
         # ttk.Label(self.cont_title, text="<imagem aqui>").grid()
 
         # Abre a imagem e redimensiona
-        base_image = Image.open(resource_path("teste_dol.png")).resize((150, 80))
+        base_image = Image.open(resource_path("dolar.jpg")).resize((150, 80))
         # base_image = base_image.resize((200, 80))
         logo_dol = ImageTk.PhotoImage(base_image)
         self.imagem = Label(self.cont_title, image=logo_dol, cursor="cross")
