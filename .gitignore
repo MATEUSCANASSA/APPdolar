@@ -1,6 +1,9 @@
 # Testes aleatórios
 randomtests/
 
+# Build automática
+build/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
