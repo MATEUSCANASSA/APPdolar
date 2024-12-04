@@ -10,6 +10,7 @@ from datetime import datetime
 import os
 import sys
 import requests
+from matplotlib.lines import lineStyles
 
 # Define root
 root = Tk()
@@ -55,7 +56,7 @@ def gerar_grafico(df, data_inicial, data_final):
     plt.plot(df['dataHoraCotacao'], df['cotacaoCompra'], marker='o', color='b', label='Cotação de Compra')
 
     # Plotando a cotação de venda
-    plt.plot(df['dataHoraCotacao'], df['cotacaoVenda'], marker='o', color='r', label='Cotação de Venda')
+    plt.plot(df['dataHoraCotacao'], df['cotacaoVenda'], marker='o', color='r', label='Cotação de Venda', linestyle='--')
 
     # Adicionando os valores das cotações de compra e venda no gráfico
     for x, y in zip(df['dataHoraCotacao'], df['cotacaoCompra']):
