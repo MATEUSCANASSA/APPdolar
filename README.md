@@ -20,6 +20,7 @@ Este é um projeto desenvolvido em Python para consultar a cotação do dólar u
 ## TODO:
 
 - [x] Modificar o código para incluir a cotação de venda da nova API.
-- [x] Ajustar o gráfico para exibir a cotação de compra e venda em eixos Y separados.
-- [x] Atualizar o código para gerar duas colunas no arquivo Excel: uma para a cotação de compra e outra para a cotação de venda.
-- [x] Testar a nova implementação com diferentes períodos de consulta.
+- [ ] Implementar feedback para o usuário de possíveis erros relacionados a API ou ao APP. 
+- [ ] Adicionar input no estilo "date picker" ao invés de digitar a data apenas.
+- [ ] Otimizar o uso de funções e variáveis.
+- [ ] Verificar e se possível otimizar imports realizados.
