@@ -1,7 +1,26 @@
-# Projeto de aplicativo de cotação de dolar escrito em pyhton consultando a API do banco central
+# Projeto de Cotação de Dólar - API do Banco Central
 
-# Quando fiz esse projeto, a API do BC disponibilizava apenas uma cotação a de compra, porém, hoje existe uma API mais abrangente, que tras as cotações de compra e de venda.
+Este é um projeto desenvolvido em Python para consultar a cotação do dólar usando a API do Banco Central do Brasil. Permite consultar tanto a cotação de compra quanto a de venda. 
 
-# Estou tentando mudar meu código para que ele traga as duas cotações, tanto no GRÁFICO quanto no EXCEL. 'https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)?@dataInicial='09-01-2024'&@dataFinalCotacao='09-30-2024'&$top=100&$format=json&$select=cotacaoCompra,cotacaoVenda,dataHoraCotacao'
 
-# Se possivel,me ajude a ajustar o código inserindo a nova API para trazer as cotações de compra e venda e a visualização do gráfico precisa demonstrar duas linhas em eixos diferentes e a planilha em excel deve gerar duas colunas, uma com o dolar compra e outra com o dolar venda.
+## Requisitos
+
+- **Versão do Python**: 3.11.0
+- **Dependências**: Pacotes listados no arquivo `requirements.txt`.
+
+### Para instalar as dependências, execute o seguinte comando:
+    ```shell script
+    $> (venv) python -m pip install -r requirements.txt
+    ```
+## API utilizada
+ [`API's Banco Central`][api-olinda-bc]
+
+[api-olinda-bc]: https://dadosabertos.bcb.gov.br/dataset/expectativas-mercado/resource/d420a704-75a7-4f45-8f4b-0fca813c70f0
+
+## TODO:
+
+- [x] Modificar o código para incluir a cotação de venda da nova API.
+- [ ] Implementar feedback para o usuário de possíveis erros relacionados a API ou ao APP. 
+- [ ] Adicionar input no estilo "date picker" ao invés de digitar a data apenas.
+- [ ] Otimizar o uso de funções e variáveis.
+- [ ] Verificar e se possível otimizar imports realizados.

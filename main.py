@@ -9,6 +9,8 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 import os
 import sys
+import requests
+from matplotlib.lines import lineStyles
 
 # Define root
 root = Tk()
@@ -22,25 +24,65 @@ root.title('Consulta Dolar')
 
 
 def obter_cotacoes(data_inicial, data_final):
-    url = f'https://api.bcb.gov.br/dados/serie/bcdata.sgs.10813/dados?formato=json&dataInicial={data_inicial}&dataFinal={data_final}'
-    df = pd.read_json(url)
-    df['data'] = pd.to_datetime(df['data'], format='%d/%m/%Y')
-    df.set_index('data', inplace=True)
+    url = f"https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)?@dataInicial=%27{data_inicial}%27&@dataFinalCotacao=%27{data_final}%27&$top=100&$format=json&$select=cotacaoCompra,cotacaoVenda,dataHoraCotacao"
+
+    response = requests.get(url)  # Fazendo a requisição GET para a API
+    if response.status_code == 200:  # Verificando se a requisição foi bem-sucedida
+        return response.json()  # Retorna os dados em formato JSON
+    else:
+        print("Erro ao fazer a requisição:", response.status_code)
+        return None
+
+
+def transformar_em_dataframe(dados_json):
+    # A chave 'value' contém a lista com os dados da cotação
+    dados = dados_json.get("value", [])
+
+    # Criando o DataFrame com as colunas 'cotacaoCompra', 'cotacaoVenda', e 'dataHoraCotacao'
+    df = pd.DataFrame(dados)
+
+    # Convertendo a coluna 'dataHoraCotacao' para o formato de data e hora
+    df['dataHoraCotacao'] = pd.to_datetime(df['dataHoraCotacao'])
+
     return df
 
 
 def gerar_grafico(df, data_inicial, data_final):
-    df.plot()
-    for x, y in zip(df.index, df['valor']):
-        plt.text(x, y, f'{y:.4f}')
-    plt.title(f'Histórico de cotações do dólar {data_inicial} a {data_final}')
+    data_inicial_graph = data_inicial.strftime('%d/%m/%Y')
+    data_final_graph = data_final.strftime('%d/%m/%Y')
+
+    # Plotando a cotação de compra
+    plt.figure(figsize=(10, 6))  # Ajustando o tamanho da figura para melhor visualização
+    plt.plot(df['dataHoraCotacao'], df['cotacaoCompra'], marker='o', color='b', label='Cotação de Compra')
+
+    # Plotando a cotação de venda
+    plt.plot(df['dataHoraCotacao'], df['cotacaoVenda'], marker='o', color='r', label='Cotação de Venda', linestyle='--')
+
+    # Adicionando os valores das cotações de compra e venda no gráfico
+    for x, y in zip(df['dataHoraCotacao'], df['cotacaoCompra']):
+        plt.text(x, y, f'{y:.4f}', fontsize=9, ha='center', va='bottom')
+
+    for x, y in zip(df['dataHoraCotacao'], df['cotacaoVenda']):
+        plt.text(x, y, f'{y:.4f}', fontsize=9, ha='center', va='top')
+
+    # Configurando o título e os rótulos
+    plt.title(f'Histórico de cotações do dólar de {data_inicial_graph} a {data_final_graph}')
     plt.xlabel('Data')
     plt.ylabel('Cotação')
+
+    # Melhorando a visualização das datas no eixo X
+    plt.xticks(rotation=45)  # Rotacionando as datas para melhor legibilidade
+    plt.tight_layout()  # Ajustando para que o gráfico não sobreponha os rótulos
+
+    # Exibindo a legenda
+    plt.legend()
+
+    # Exibindo o gráfico
     plt.show()
 
 
 def gerar_excel(df):
-    df.to_excel('Dolar.xlsx')
+    df.to_excel('Dolar.xlsx', index=False)
     tkinter.messagebox.showinfo(title="AVISO", message="Arquivo gerado com sucesso!!")
 
 
@@ -49,13 +91,21 @@ def on_gerar_click(data_inicial_entry, data_final_entry, tipo=0):
     data_final = data_final_entry.get()
 
     try:
-        datetime.strptime(data_inicial, '%d/%m/%Y')
-        datetime.strptime(data_final, '%d/%m/%Y')
+        data_inicial = datetime.strptime(data_inicial, '%d/%m/%Y')
+        data_final = datetime.strptime(data_final, '%d/%m/%Y')
     except ValueError:
         print('Data inválida. Por favor, digite a data no formato dd/mm/aaaa.')
         return
 
-    df = obter_cotacoes(data_inicial, data_final)
+    # Converte para o formato da API atualizada
+    data_inicial_api = data_inicial.strftime('%m-%d-%Y')
+    data_final_api = data_final.strftime('%m-%d-%Y')
+    json = obter_cotacoes(data_inicial_api, data_final_api)
+
+    if json is None:
+        return
+
+    df = transformar_em_dataframe(json)
 
     if tipo == 0:
         gerar_grafico(df, data_inicial, data_final)
@@ -106,8 +156,7 @@ class Application:
         # ttk.Label(self.cont_title, text="<imagem aqui>").grid()
 
         # Abre a imagem e redimensiona
-        base_image = Image.open(resource_path("teste_dol.png")).resize((150, 80))
-        # base_image = base_image.resize((200, 80))
+        base_image = Image.open(resource_path("dolar.jpg")).resize((150, 80))
         logo_dol = ImageTk.PhotoImage(base_image)
         self.imagem = Label(self.cont_title, image=logo_dol, cursor="cross")
         self.imagem.image = logo_dol
